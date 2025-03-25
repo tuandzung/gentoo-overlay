@@ -3,7 +3,7 @@ Preparing Overlay
 
 This overlay is not official, so to add it you need to run
 
-    # layman -o  https://raw.githubusercontent.com/tuandzung/gentoo-overlay/master/repositories.xml -f -a tep
+    # layman -o  https://raw.githubusercontent.com/tuandzung/gentoo-overlay/main/repositories.xml -f -a tep
 
 or
 
