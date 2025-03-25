@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<repositories version="1.0">
+    <repo priority="150" quality="experimental" status="unofficial">
+        <name>tep</name>
+        <description lang="en">tuandzung's Gentoo Overlay</description>
+        <homepage>https://github.com/tuandzung/gentoo-overlay.git</homepage>
+        <owner>
+            <name>Ngo Tuan Dzung</name>
+            <email>zun1903@gmail.com</email>
+        </owner>
+        <source type="git">git://github.com/tuandzung/gentoo-overlay.git</source>
+        <source type="git">https://github.com/tuandzung/gentoo-overlay.git</source>
+        <feed>https://github.com/tuandzung/gentoo-overlay/commits/master.atom</feed>
+    </repo>
+</repositories>
