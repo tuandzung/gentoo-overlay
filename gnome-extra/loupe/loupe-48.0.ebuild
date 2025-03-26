@@ -19,7 +19,7 @@ KEYWORDS="~amd64"
 IUSE="X"
 
 RDEPEND="
-	>=gui-libs/gtk-4.11.3[X?]
+	>=gui-libs/gtk-4.16.0[X?]
 	>=gui-libs/libadwaita-1.4_alpha
 	>=dev-libs/libgweather-4.0.0
 	>=media-libs/lcms-2.12.0
