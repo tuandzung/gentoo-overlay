@@ -5,6 +5,10 @@ EAPI=8
 
 RUST_MIN_VER=1.85.0
 
+PATCHES=(
+  "${FILESDIR}/${P}-system-protoc.patch"
+)
+
 CRATES="
   addr2line-0.24.2
   adler2-2.0.1
@@ -149,15 +153,6 @@ CRATES="
   protobuf-codegen-3.7.2
   protobuf-parse-3.7.2
   protobuf-support-3.7.2
-  protoc-bin-vendored-3.2.0
-  protoc-bin-vendored-linux-aarch_64-3.2.0
-  protoc-bin-vendored-linux-ppcle_64-3.2.0
-  protoc-bin-vendored-linux-s390_64-3.2.0
-  protoc-bin-vendored-linux-x86_32-3.2.0
-  protoc-bin-vendored-linux-x86_64-3.2.0
-  protoc-bin-vendored-macos-aarch_64-3.2.0
-  protoc-bin-vendored-macos-x86_64-3.2.0
-  protoc-bin-vendored-win32-3.2.0
   quote-1.0.40
   r-efi-5.3.0
   redox_syscall-0.5.17
@@ -274,7 +269,6 @@ KEYWORDS="~amd64"
 RDEPEND="
   >=gui-libs/gtk-4.6:4
   gui-libs/gtk4-layer-shell
-  x11-libs/cairo
   app-text/poppler[glib]
 "
 DEPEND="${RDEPEND}"
