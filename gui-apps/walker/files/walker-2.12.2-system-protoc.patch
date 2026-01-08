@@ -1,17 +1,17 @@
---- a/Cargo.toml
-+++ b/Cargo.toml
-@@ -18,4 +18,3 @@ xdg = "3.0.0"
+--- a/Cargo.toml	2025-12-10 01:34:29.000000000 +0700
++++ b/Cargo.toml	2026-01-09 00:11:37.587030690 +0700
+@@ -24,4 +24,3 @@
  
  [build-dependencies]
  protobuf-codegen = "3.4"
 -protoc-bin-vendored = "3.0"
---- a/Cargo.lock
-+++ b/Cargo.lock
-@@ -1458,41 +1458,6 @@ dependencies = [
+--- a/Cargo.lock	2025-12-10 01:34:29.000000000 +0700
++++ b/Cargo.lock	2026-01-09 00:11:37.587594877 +0700
+@@ -1457,69 +1457,6 @@
   "thiserror 1.0.69",
  ]
  
- [[package]]
+-[[package]]
 -name = "protoc-bin-vendored"
 -version = "3.2.0"
 -source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -74,13 +74,10 @@
 -version = "3.2.0"
 -source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "95067976aca6421a523e491fce939a3e65249bac4b977adee0ee9771568e8aa3"
--
+ 
  [[package]]
  name = "quote"
- version = "1.0.40"
-@@ -2061,7 +2026,6 @@ dependencies = [
-  "notify",
-  "nucleo-matcher",
+@@ -2061,7 +1998,6 @@
   "poppler-rs",
   "protobuf",
   "protobuf-codegen",
@@ -88,5 +85,3 @@
   "serde",
   "tokio",
   "which 8.0.0",
-  "xdg",
- ]
