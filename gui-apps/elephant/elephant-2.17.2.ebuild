@@ -1,6 +1,6 @@
 EAPI=8
 
-inherit go-module
+inherit go-module multilib
 
 DESCRIPTION="Plugin-based backend service for custom application launchers and desktop utilities"
 HOMEPAGE="https://github.com/abenz1267/elephant"
@@ -159,7 +159,7 @@ EGO_SUM=(
 
 src_compile() {
 	export CGO_ENABLED=1
-	ego build -o elephant ./cmd/elephant
+	ego build -o elephant ./cmd/elephant || die
 
 	mkdir -p providers || die
 	local provider name
@@ -175,7 +175,7 @@ src_install() {
 	dobin elephant
 	local plugins=( providers/*.so )
 	if [[ -e ${plugins[0]} ]]; then
-		insinto /etc/xdg/elephant/providers
+		insinto "/usr/$(get_libdir)/elephant/providers"
 		doins "${plugins[@]}"
 	fi
 	DOCS=( README.md )
