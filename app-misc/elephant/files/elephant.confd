@@ -1,0 +1,12 @@
+# Optional arguments passed to elephant.
+ELEPHANT_ARGS=""
+
+# Optional path to a configuration file.
+ELEPHANT_CONFIG=""
+
+# Optional user/group to run the service as. Leave empty to run as root.
+ELEPHANT_USER=""
+ELEPHANT_GROUP=""
+
+# Optional pidfile location. Defaults to /run/elephant.pid.
+ELEPHANT_PIDFILE=""

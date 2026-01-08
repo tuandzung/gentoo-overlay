@@ -1,0 +1,26 @@
+#!/sbin/openrc-run
+
+description="Elephant backend service"
+
+command="/usr/bin/elephant"
+command_args="${ELEPHANT_ARGS}"
+command_background="yes"
+
+pidfile="${ELEPHANT_PIDFILE:-/run/${RC_SVCNAME}.pid}"
+
+if [ -n "${ELEPHANT_USER}" ]; then
+	command_user="${ELEPHANT_USER}${ELEPHANT_GROUP:+:${ELEPHANT_GROUP}}"
+fi
+
+start_pre() {
+	if [ -n "${ELEPHANT_CONFIG}" ]; then
+		command_args="--config ${ELEPHANT_CONFIG} ${command_args}"
+	fi
+
+	pid_dir=$(dirname "${pidfile}")
+	if [ -n "${ELEPHANT_USER}" ]; then
+		checkpath --directory --owner "${ELEPHANT_USER}:${ELEPHANT_GROUP:-${ELEPHANT_USER}}" --mode 0755 "${pid_dir}"
+	else
+		checkpath --directory --mode 0755 "${pid_dir}"
+	fi
+}
