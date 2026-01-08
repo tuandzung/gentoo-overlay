@@ -175,7 +175,7 @@ src_install() {
 	dobin elephant
 	local plugins=( providers/*.so )
 	if [[ -e ${plugins[0]} ]]; then
-		insinto "/usr/$(get_libdir)/elephant/providers"
+		insinto "/usr/$(get_libdir)/elephant"
 		doins "${plugins[@]}"
 	fi
 	DOCS=( README.md )
