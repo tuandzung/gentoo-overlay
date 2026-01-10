@@ -19,7 +19,7 @@ KEYWORDS="~amd64"
 RDEPEND="
   >=gui-libs/gtk-4.6:4
   gui-libs/gtk4-layer-shell
-  app-text/poppler[glib]
+  app-text/poppler[cairo]
 "
 DEPEND="${RDEPEND}"
 BDEPEND="
