@@ -3,7 +3,7 @@
 
 EAPI=8
 
-RUST_MIN_VER=1.81.0
+RUST_MIN_VER=1.88.0
 
 inherit cargo
 
@@ -23,7 +23,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}"
 BDEPEND="
-  >=virtual/rust-${RUST_MIN_VER}
+  >=dev-lang/rust-${RUST_MIN_VER}
   dev-libs/protobuf
   virtual/pkgconfig
 "
