@@ -10,3 +10,10 @@ ELEPHANT_GROUP=""
 
 # Optional pidfile location. Defaults to /run/elephant.pid.
 ELEPHANT_PIDFILE=""
+
+# Optional runtime/logging locations for user services.
+# Defaults are /run and /var/log as root, or XDG_RUNTIME_DIR and XDG_STATE_HOME when non-root.
+ELEPHANT_RUNDIR=""
+ELEPHANT_LOGDIR=""
+ELEPHANT_OUTPUT_LOG=""
+ELEPHANT_ERROR_LOG=""

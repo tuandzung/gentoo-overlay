@@ -2,19 +2,55 @@
 
 description="Elephant backend service"
 
+supervisor=supervise-daemon
 command="/usr/bin/elephant"
 command_args="${ELEPHANT_ARGS}"
-command_background="yes"
+output_log=""
+error_log=""
+pidfile=""
 
-pidfile="${ELEPHANT_PIDFILE:-/run/${RC_SVCNAME}.pid}"
+depend() {
+  use logger
+}
 
 if [ -n "${ELEPHANT_USER}" ]; then
 	command_user="${ELEPHANT_USER}${ELEPHANT_GROUP:+:${ELEPHANT_GROUP}}"
 fi
 
 start_pre() {
+	local run_uid log_dir home_dir run_user
+	if [ -n "${ELEPHANT_USER}" ]; then
+		run_user="${ELEPHANT_USER}"
+		run_uid=$(id -u "${ELEPHANT_USER}")
+		home_dir=$(eval echo "~${ELEPHANT_USER}")
+	else
+		run_user="root"
+		run_uid=$(id -u)
+		home_dir="${HOME}"
+	fi
+
+	if [ "${run_uid}" -eq 0 ]; then
+		: "${ELEPHANT_RUNDIR:=/run}"
+		: "${ELEPHANT_LOGDIR:=/var/log}"
+	else
+		: "${ELEPHANT_RUNDIR:=${XDG_RUNTIME_DIR:-/run/user/${run_uid}}}"
+		: "${ELEPHANT_LOGDIR:=${XDG_STATE_HOME:-${home_dir}/.local/state}/elephant}"
+	fi
+
+	pidfile="${ELEPHANT_PIDFILE:-${ELEPHANT_RUNDIR}/${RC_SVCNAME}.pid}"
+	output_log="${ELEPHANT_OUTPUT_LOG:-${ELEPHANT_LOGDIR}/elephant.log}"
+	error_log="${ELEPHANT_ERROR_LOG:-${ELEPHANT_LOGDIR}/elephant.err}"
+
 	if [ -n "${ELEPHANT_CONFIG}" ]; then
 		command_args="--config ${ELEPHANT_CONFIG} ${command_args}"
+	fi
+
+	if [ -n "${ELEPHANT_RUNDIR}" ]; then
+		if [ -n "${ELEPHANT_USER}" ]; then
+			checkpath --directory --owner "${ELEPHANT_USER}:${ELEPHANT_GROUP:-${ELEPHANT_USER}}" --mode 0755 "${ELEPHANT_RUNDIR}"
+		else
+			checkpath --directory --mode 0755 "${ELEPHANT_RUNDIR}"
+		fi
 	fi
 
 	pid_dir=$(dirname "${pidfile}")
@@ -22,5 +58,25 @@ start_pre() {
 		checkpath --directory --owner "${ELEPHANT_USER}:${ELEPHANT_GROUP:-${ELEPHANT_USER}}" --mode 0755 "${pid_dir}"
 	else
 		checkpath --directory --mode 0755 "${pid_dir}"
+	fi
+
+	log_dir=$(dirname "${output_log}")
+	if [ -n "${ELEPHANT_USER}" ]; then
+		checkpath --directory --owner "${ELEPHANT_USER}:${ELEPHANT_GROUP:-${ELEPHANT_USER}}" --mode 0755 "${log_dir}"
+	else
+		checkpath --directory --mode 0755 "${log_dir}"
+	fi
+	if [ "$(dirname "${error_log}")" != "${log_dir}" ]; then
+		if [ -n "${ELEPHANT_USER}" ]; then
+			checkpath --directory --owner "${ELEPHANT_USER}:${ELEPHANT_GROUP:-${ELEPHANT_USER}}" --mode 0755 "$(dirname "${error_log}")"
+		else
+			checkpath --directory --mode 0755 "$(dirname "${error_log}")"
+		fi
+	fi
+
+	if [ "${run_user}" != "root" ]; then
+		export XDG_RUNTIME_DIR="${ELEPHANT_RUNDIR}"
+		export HOME="${home_dir}"
+		command_env="XDG_RUNTIME_DIR=${ELEPHANT_RUNDIR} HOME=${home_dir}${command_env:+ ${command_env}}"
 	fi
 }
