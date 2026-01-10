@@ -10,10 +10,23 @@ SRC_URI+=" https://github.com/tuandzung/${PN}/releases/download/v${PV}/${P}-vend
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="1password archlinuxpkgs bluetooth bookmarks calc clipboard +desktopapplications files menus nirisessions providerlist runner snippets symbols todo unicode websearch windows bitwarden dnfpackages"
+IUSE="1password bluetooth bookmarks calc clipboard +desktopapplications files menus nirisessions providerlist runner snippets symbols todo unicode websearch windows bitwarden"
 
 DEPEND="dev-db/sqlite"
-RDEPEND="${DEPEND}"
+RDEPEND="
+  ${DEPEND}
+  bitwarden? ( app-admin/rbw )
+  bookmarks? ( app-misc/jq )
+  calc? ( sci-libs/libqalculate )
+  clipboard? (
+    gui-apps/wl-clipboard
+    media-gfx/imagemagick
+  )
+  files? ( sys-apps/fd )
+  nirisessions? ( gui-wm/niri )
+  snippets? ( gui-apps/wtype )
+  windows? ( sys-apps/fd )
+"
 BDEPEND=">=dev-lang/go-1.21"
 
 src_compile() {
@@ -25,6 +38,9 @@ src_compile() {
   for provider in internal/providers/*; do
     [[ -d ${provider} ]] || continue
     name=${provider##*/}
+    case ${name} in
+      archlinuxpkgs | dnfpackages) continue ;;
+    esac
     use "${name}" || continue
     ego build -buildmode=plugin -o "providers/${name}.so" "./internal/providers/${name}" || die
   done

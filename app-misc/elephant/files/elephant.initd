@@ -77,6 +77,6 @@ start_pre() {
 	if [ "${run_user}" != "root" ]; then
 		export XDG_RUNTIME_DIR="${ELEPHANT_RUNDIR}"
 		export HOME="${home_dir}"
-		command_env="XDG_RUNTIME_DIR=${ELEPHANT_RUNDIR} HOME=${home_dir}${command_env:+ ${command_env}}"
+    export PATH="${PATH}:${home_dir}/.local/bin:${home_dir}/.cargo/bin:${home_dir}/.go/bin"
 	fi
 }
