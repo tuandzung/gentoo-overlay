@@ -24,7 +24,7 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 BDEPEND="
   >=virtual/rust-${RUST_MIN_VER}
-  dev-util/protobuf
+  dev-libs/protobuf
   virtual/pkgconfig
 "
 
