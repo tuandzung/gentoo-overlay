@@ -9,6 +9,8 @@ DESCRIPTION="Console-based Audio Visualizer for Alsa"
 HOMEPAGE="https://github.com/LukashonakV/cava/"
 SRC_URI="https://github.com/LukashonakV/cava/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
+PATCHES=("${FILESDIR}/${P}.patch")
+
 S="${WORKDIR}/cava-${PV}"
 
 LICENSE="MIT Unlicense"
